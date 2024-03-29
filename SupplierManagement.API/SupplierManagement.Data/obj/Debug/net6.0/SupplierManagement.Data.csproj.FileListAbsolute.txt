@@ -1,0 +1,14 @@
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\bin\Debug\net6.0\SupplierManagement.Data.deps.json
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\bin\Debug\net6.0\SupplierManagement.Data.runtimeconfig.json
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\bin\Debug\net6.0\SupplierManagement.Data.dll
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\bin\Debug\net6.0\SupplierManagement.Data.pdb
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\SupplierManagement.Data.csproj.AssemblyReference.cache
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\SupplierManagement.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\SupplierManagement.Data.AssemblyInfoInputs.cache
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\SupplierManagement.Data.AssemblyInfo.cs
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\SupplierManagement.Data.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\SupplierManagement.Data.dll
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\refint\SupplierManagement.Data.dll
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\SupplierManagement.Data.pdb
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\SupplierManagement.Data.genruntimeconfig.cache
+C:\Users\hp\source\repos\SupplierManagement.API\SupplierManagement.Data\obj\Debug\net6.0\ref\SupplierManagement.Data.dll

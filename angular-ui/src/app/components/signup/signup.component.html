@@ -1,0 +1,192 @@
+<div class="outer">
+  <div class="container">
+    <div class="row">
+      <!-- <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3"> -->
+      <div class="offset-md-2 col-lg-4 col-md-6 offset-lg-4 offset-md-3">
+        <div class="panel border bg-white">
+          <div class="panel-heading">
+            <h3 class="pt-3 font-weight-bold">Sign Up</h3>
+          </div>
+          <div class="panel-body p-3">
+            <form [formGroup]="signUpForm">
+              <div class="form-group pt-3">
+                <div
+                  class="input-field"
+                  [class.error]="
+                    signUpForm.controls['firstName'].dirty &&
+                    signUpForm.hasError('required', 'firstName')
+                  "
+                >
+                  <span class="p-2"></span>
+                  <input
+                    formControlName="firstName"
+                    type="text"
+                    placeholder="FirstName"
+                  />
+                </div>
+              </div>
+              <small
+                class="text-danger"
+                *ngIf="
+                  signUpForm.controls['firstName'].dirty &&
+                  signUpForm.hasError('required', 'firstName')
+                "
+                >*FirstName is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="signUpForm.controls['firstName'].hasError('minlength')"
+                >*Minimum length must be of 3 letters</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="signUpForm.controls['firstName'].hasError('maxlength')"
+                >*Maximum length cannot exceed 50 letters</small
+              >
+
+              <div class="form-group pt-3">
+                <div
+                  class="input-field"
+                  [class.error]="
+                    signUpForm.controls['lastName'].dirty &&
+                    signUpForm.hasError('required', 'lastName')
+                  "
+                >
+                  <span class="p-2"></span>
+                  <input
+                    formControlName="lastName"
+                    type="text"
+                    placeholder="LastName"
+                  />
+                </div>
+              </div>
+              <small
+                class="text-danger"
+                *ngIf="
+                  signUpForm.controls['lastName'].dirty &&
+                  signUpForm.hasError('required', 'lastName')
+                "
+                >*LastName is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="signUpForm.controls['lastName'].hasError('minlength')"
+                >*Minimum length must be of 2 letters</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="signUpForm.controls['lastName'].hasError('maxlength')"
+                >*Maximum length cannot exceed 50 letters</small
+              >
+
+              <div class="form-group pt-3">
+                <div
+                  class="input-field"
+                  [class.error]="
+                    signUpForm.controls['email'].dirty &&
+                    signUpForm.hasError('required', 'email')
+                  "
+                >
+                  <span class="fa fa-user p-2"></span>
+                  <input
+                    formControlName="email"
+                    type="email"
+                    placeholder="Email"
+                  />
+                </div>
+              </div>
+              <small
+                class="text-danger"
+                *ngIf="
+                  signUpForm.controls['email'].dirty &&
+                  signUpForm.hasError('required', 'email')
+                "
+                >*Email is required</small
+              >
+
+              <div class="form-group pt-3">
+                <div
+                  class="input-field"
+                  [class.error]="
+                    signUpForm.controls['password'].dirty &&
+                    signUpForm.hasError('required', 'password')
+                  "
+                >
+                  <span class="fa fa-lock p-2"></span>
+                  <input
+                    [type]="typ"
+                    formControlName="password"
+                    placeholder="Password"
+                  />
+                  <span
+                    class="fa {{ eyeIcon }}"
+                    (click)="hideShowPass()"
+                  ></span>
+                </div>
+              </div>
+              <small
+                class="text-danger"
+                *ngIf="
+                  signUpForm.controls['password'].dirty &&
+                  signUpForm.hasError('required', 'password')
+                "
+                >*Password is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="
+                  signUpForm.controls['password'].hasError('pattern') &&
+                  signUpForm.controls['password'].dirty
+                "
+                >*Passwords must be at least 8 characters, one uppercase, one
+                lowercase, one number and one special character</small
+              >
+              <div class="form-group pt-3">
+                <div
+                  class="input-field"
+                  [class.error]="
+                    signUpForm.controls['confirmPassword'].dirty &&
+                    signUpForm.hasError('required', 'confirmPassword')
+                  "
+                >
+                  <span class="fa fa-lock p-2"></span>
+                  <input
+                    [type]="typ"
+                    formControlName="confirmPassword"
+                    placeholder="Confirm Password"
+                  />
+                </div>
+              </div>
+              <small
+                class="text-danger"
+                *ngIf="
+                  signUpForm.controls['confirmPassword'].dirty &&
+                  signUpForm.hasError('required', 'confirmPassword')
+                "
+                >*Confirm Password is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="signUpForm.controls['confirmPassword'].dirty && signUpForm.errors?.['confirmPasswordError']"
+                >*Password doesn't match</small
+              >
+
+              <button
+                type="submit"
+                (click)="onSignup()"
+                class="btn btn-primary btn-block mt-4 w-100"
+              >
+                Sign Up
+              </button>
+              <div class="text-center pt-4 text-muted">
+                Already have an account?<a id="forget" routerLink="/login"
+                  >Login</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

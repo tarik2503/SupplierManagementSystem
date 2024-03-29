@@ -1,0 +1,188 @@
+/* side-bar and header part */
+#container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#sidebar {
+ 
+  width: 200px;
+  height: 100%;
+  background: #000;
+  z-index: 1000;
+}
+#contentContainer {
+  flex-grow: 1;
+   
+}
+
+#header {
+  
+  display: flex;
+  width: 100%;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  box-shadow: 0px 4px 4px #ccc;
+  background: #870404;  
+}
+
+#menu {
+  display: flex;
+  gap: 20px;
+}
+
+#logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+img {
+  cursor: pointer;
+}
+
+#content {
+  padding: 20px;
+  
+}
+
+/* login and signup part */
+.outer {
+  min-height: 100vh;
+  background: linear-gradient(to top, #000 20%, #870404 90%) no-repeat;
+}
+
+.panel-heading {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#forget {
+  min-width: 100px;
+  margin-left: auto;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.form-inline label {
+  padding-left: 10px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.btn {
+  margin-top: 20px;
+  border-radius: 15px;
+}
+
+.panel {
+  min-height: 280px;
+  box-shadow: 20px 20px 80px rgb(12, 12, 12);
+  border-radius: 12px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.input-field {
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  color: #4343ff;
+}
+
+.input-field.error {
+  border: 1px solid red;
+  color: red;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  width: 100%;
+}
+
+.fa-eye-slash.btn {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.bordert {
+  border-top: 1px solid #aaa;
+  position: relative;
+}
+
+.bordert:after {
+  content: "or connect with";
+  position: absolute;
+  top: -13px;
+  left: 33%;
+  background-color: #fff;
+  padding: 0 8px;
+}
+
+.pointer-cursor {
+  cursor: pointer;
+}
+
+/* forms auto focus changed */
+.custom-input:focus {
+  border-color: #f5f6f7;
+  box-shadow: none;
+}
+
+/* image upload preview */
+.upload {
+  font-weight: bold;
+  color: #28a745;
+  margin-left: 15px;
+  line-height: 36px;
+ 
+}
+
+.img-preview {
+  margin-left: 25px;
+  background: #9e9d9d;
+  width: 30vh; 
+  height: 30vh; 
+  border-radius: 50%;
+  background-size: cover; 
+  background-position: center; 
+}
+
+.product-img-preview {
+  width: 45vh;
+  height: 35vh;
+  background: #9e9d9d;
+  object-fit: cover;
+  border-radius: 0; 
+  background-size: cover; 
+  background-position:center;
+  object-fit: cover;
+}
+
+.upload-btn{
+  margin-left: 34px !important;
+  width: 200px;
+}
+
+
+
+
+

@@ -1,0 +1,51 @@
+<div class="container my-2">
+  <a class="btn btn-primary mb-2" routerLink="/supplier/add">Add Supplier</a>
+  <h1 class="mb-3">Suppliers</h1>
+
+  <table class="table table-striped table-bordered shadow">
+    <thead class="bg-dark text-light">
+      <tr>
+        <th>Sr. No.</th>
+        <th>Photo</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>ZipCode</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let supplier of suppliers; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <img
+            [src]="createImagePath(supplier.imgPath)"
+            alt="Photo"
+            style="width: 60px; height: 60px; object-fit: cover"
+          />
+        </td>
+        <td>{{ supplier.supplierName }}</td>
+        <td>{{ supplier.email }}</td>
+        <td>{{ supplier.phone }}</td>
+        <td>
+          {{ supplier.street }}, {{ supplier.city }}, <br />
+          {{ supplier.state }}, {{ supplier.country }}
+        </td>
+        <td>{{ supplier.zipCode }}</td>
+
+        <td>
+          <a
+            [routerLink]="['/supplier', 'edit', supplier.id]"
+            class="btn btn-success mx-1 mt-1"
+            >Edit</a
+          >
+          <a (click)="deleteFn(supplier.id)" class="btn btn-danger mt-1"
+            >Delete</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!suppliers || suppliers.length <= 0">No Supplier Found!</p>
+</div>

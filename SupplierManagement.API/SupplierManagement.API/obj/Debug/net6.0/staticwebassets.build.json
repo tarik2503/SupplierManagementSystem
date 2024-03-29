@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "NQHDg52ynQqvheoxMPi6FQsY0Q7ySdd9bzy428cY5HU=",
+  "Source": "SupplierManagement.API",
+  "BasePath": "_content/SupplierManagement.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

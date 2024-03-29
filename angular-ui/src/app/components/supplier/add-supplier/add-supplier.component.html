@@ -1,0 +1,306 @@
+<div class="container my-2">
+  <h1 class="mb-1">Add New Supplier</h1>
+
+  <div class="row justify-content-center ">
+    <div class="col-lg-12 mt-0">
+      <form [formGroup]="addSupplierForm">
+        <div class="row mb-3 ">
+          <div class="col-md-10"></div>
+
+          <div
+            class="col-md-2 d-flex align-items-center justify-content-between"
+          >
+            
+            <div class="d-flex">
+              <button type="submit" (click)="onSave()" class="btn btn-primary">
+                Save
+              </button>
+              <a
+                routerLink="/supplierlist"
+                class="btn btn-outline-secondary mx-2"
+                >Cancel</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3 shadow bg-light">
+          <div class="col-md-4 mt-2">
+            <!-- add image -->
+
+            <div class="mt-3 mx-4">
+              <img
+                alt=""
+                [ngStyle]="{
+                  'background-image':
+                    'url(' +
+                    (imageURL ? imageURL : 'assets/images/suppIcon.png') +
+                    ')'
+                }"
+                class="rounded-circle img-preview"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="file"
+                #file
+                id="file"
+                class="form-control"
+                style="display: none"
+                (change)="uploadFile(file.files)"
+              />
+              <button
+                type="button"
+                class="btn btn-success upload-btn"
+                (click)="file.click()"
+              >
+                Choose Image
+              </button>
+            </div>
+            <div class="mt-2">
+              <span class="upload" *ngIf="progress > 0">{{ progress }}%</span>
+              <span class="upload" *ngIf="message">{{ message }}</span>
+            </div>
+
+            <!-- add image -->
+          </div>
+
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Name</label>
+                <div
+                  class="input-field"
+                  [class.error]="
+                    addSupplierForm.controls['supplierName'].dirty &&
+                    addSupplierForm.hasError('required', 'supplierName')
+                  "
+                >
+                  <input
+                    formControlName="supplierName"
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="Enter Name"
+                  />
+                </div>
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['supplierName'].dirty &&
+                    addSupplierForm.hasError('required', 'supplierName')
+                  "
+                  >*Name is required</small
+                >
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <div
+                  class="input-field"
+                  [class.error]="
+                    addSupplierForm.controls['email'].dirty &&
+                    addSupplierForm.hasError('required', 'email')
+                  "
+                >
+                  <input
+                    formControlName="email"
+                    type="email"
+                    class="form-control custom-input"
+                    placeholder="Enter Email"
+                  />
+                </div>
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['email'].dirty &&
+                    addSupplierForm.hasError('required', 'email')
+                  "
+                  >*Email is required</small
+                >
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['email'].hasError('email') &&
+                    addSupplierForm.controls['email'].dirty
+                  "
+                  >*Invalid email format</small
+                >
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <div
+                  class="input-field"
+                  [class.error]="
+                    addSupplierForm.controls['phone'].dirty &&
+                    addSupplierForm.hasError('required', 'phone')
+                  "
+                >
+                  <input
+                    formControlName="phone"
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="Enter Phone"
+                  />
+                </div>
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['phone'].dirty &&
+                    addSupplierForm.hasError('required', 'phone')
+                  "
+                  >*Phone is required</small
+                >
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['phone'].hasError('pattern') &&
+                    addSupplierForm.controls['phone'].dirty
+                  "
+                  >*Invalid phone format</small
+                >
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="street" class="form-label">Street</label>
+                <div
+                  class="input-field"
+                  [class.error]="
+                    addSupplierForm.controls['street'].dirty &&
+                    addSupplierForm.hasError('required', 'street')
+                  "
+                >
+                  <input
+                    formControlName="street"
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="Enter Street"
+                  />
+                </div>
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['street'].dirty &&
+                    addSupplierForm.hasError('required', 'street')
+                  "
+                  >*Street is required</small
+                >
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label">City</label>
+                <div
+                  class="input-field"
+                  [class.error]="
+                    addSupplierForm.controls['city'].dirty &&
+                    addSupplierForm.hasError('required', 'city')
+                  "
+                >
+                  <input
+                    formControlName="city"
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="Enter Street"
+                  />
+                </div>
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['city'].dirty &&
+                    addSupplierForm.hasError('required', 'city')
+                  "
+                  >*City is required</small
+                >
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="state" class="form-label">State</label>
+                <div
+                  class="input-field"
+                  [class.error]="
+                    addSupplierForm.controls['state'].dirty &&
+                    addSupplierForm.hasError('required', 'state')
+                  "
+                >
+                  <input
+                    formControlName="state"
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="Enter Street"
+                  />
+                </div>
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['state'].dirty &&
+                    addSupplierForm.hasError('required', 'state')
+                  "
+                  >*State is required</small
+                >
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="country" class="form-label">Country</label>
+                <div
+                  class="input-field"
+                  [class.error]="
+                    addSupplierForm.controls['country'].dirty &&
+                    addSupplierForm.hasError('required', 'country')
+                  "
+                >
+                  <input
+                    formControlName="country"
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="Enter Country"
+                  />
+                </div>
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['country'].dirty &&
+                    addSupplierForm.hasError('required', 'country')
+                  "
+                  >*Country is required</small
+                >
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="zipcode" class="form-label">Zip Code</label>
+                <div
+                  class="input-field"
+                  [class.error]="
+                    addSupplierForm.controls['zipCode'].dirty &&
+                    addSupplierForm.hasError('required', 'zipCode')
+                  "
+                >
+                  <input
+                    formControlName="zipCode"
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="Enter Zip Code"
+                  />
+                </div>
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    addSupplierForm.controls['zipCode'].dirty &&
+                    addSupplierForm.hasError('required', 'zipCode')
+                  "
+                  >*ZipCode is required</small
+                >
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
