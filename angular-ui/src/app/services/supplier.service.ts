@@ -15,10 +15,10 @@ export class SupplierService {
     return this.http.get<Supplier[]>(this.baseApiUrl + '/api/supplier');
   }
 
-  addSupplier(supplier: Supplier): Observable<Supplier> {
+  addSupplier(formData: FormData): Observable<Supplier> {
     return this.http.post<Supplier>(
       this.baseApiUrl + '/api/supplier',
-      supplier
+      formData
     );
   }
 
@@ -26,10 +26,10 @@ export class SupplierService {
     return this.http.get<Supplier>(this.baseApiUrl + '/api/supplier/' + id);
   }
 
-  updateSupplier(id: string, updateSupplier: Supplier): Observable<Supplier> {
+  updateSupplier(id: string, formData: FormData): Observable<Supplier> {
     return this.http.put<Supplier>(
       this.baseApiUrl + '/api/supplier/' + id,
-      updateSupplier
+      formData
     );
   }
 
@@ -37,16 +37,7 @@ export class SupplierService {
     return this.http.delete<Supplier>(this.baseApiUrl + '/api/supplier/' + id);
   }
 
-  uploadImage(formData: FormData): Observable<HttpEvent<Object>> {
-    return this.http.post<HttpEvent<Object>>(
-      this.baseApiUrl + '/api/supplier/image',
-      formData,
-      { reportProgress: true, observe: 'events' }
-    );
-  }
 
-  getImageFullPath(serverPath: string): string {
-    serverPath = serverPath.replace(/\\/g, '/');
-    return `${this.baseApiUrl}/${serverPath}`;
-  }
+
+ 
 }

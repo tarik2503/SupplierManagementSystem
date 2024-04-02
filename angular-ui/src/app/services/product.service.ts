@@ -11,12 +11,16 @@ export class ProductService {
   baseApiUrl: string = environment.baseApiUrl;
   constructor(private http: HttpClient) {}
 
-  getAllProducts(): Observable<Product[]> {
+  getAllProducts(): Observable<Product[]>{
     return this.http.get<Product[]>(this.baseApiUrl + '/api/product');
   }
 
-  addProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.baseApiUrl + '/api/product', product);
+  getProductsBySupplierId(supplierId: string): Observable<Product[]> {
+    return this.http.get<Product[]>(this.baseApiUrl + '/api/product/supplier/' + supplierId);
+  }
+
+  addProduct(formData: FormData): Observable<Product> {
+    return this.http.post<Product>(this.baseApiUrl + '/api/product', formData);
   }
 
   getProduct(id: string): Observable<Product> {
@@ -27,10 +31,10 @@ export class ProductService {
     return this.http.delete<Product>(this.baseApiUrl + '/api/product/' + id);
   }
 
-  updateProduct(id: string, updateProduct: Product): Observable<Product> {
+  updateProduct(id: string, formData: FormData): Observable<Product> {
     return this.http.put<Product>(
       this.baseApiUrl + '/api/product/' + id,
-      updateProduct
+      formData
     );
   }
 }

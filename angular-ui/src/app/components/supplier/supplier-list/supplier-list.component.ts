@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Supplier } from '../../../models/supplier.model';
 import { SupplierService } from '../../../services/supplier.service';
+import { ImagePathService } from '../../../services/image-path.service';
 
 @Component({
   selector: 'app-supplier-list',
@@ -10,7 +11,7 @@ import { SupplierService } from '../../../services/supplier.service';
 export class SupplierListComponent implements OnInit {
   suppliers: Supplier[] = [];
 
-  constructor(private supplierService: SupplierService) {}
+  constructor(private supplierService: SupplierService, private imagePathService:ImagePathService) {}
 
   ngOnInit(): void {
     this.loadSupplier();
@@ -40,6 +41,6 @@ export class SupplierListComponent implements OnInit {
   }
 
   createImagePath(serverPath: string) {
-    return this.supplierService.getImageFullPath(serverPath);
+    return this.imagePathService.getImageFullPath(serverPath);
   }
 }

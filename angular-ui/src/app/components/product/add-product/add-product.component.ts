@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../../../models/product.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import ValidateForm from '../../../helpers/validateform';
 import { SupplierService } from '../../../services/supplier.service';
 import { Supplier } from '../../../models/supplier.model';
 import { ProductService } from '../../../services/product.service';
-import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { ImagePathService } from '../../../services/image-path.service';
 
 @Component({
   selector: 'app-add-product',
@@ -15,22 +15,64 @@ import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 })
 export class AddProductComponent implements OnInit {
   addProductForm!: FormGroup;
-  product!: Product;
+  image!:File
   suppliers: Supplier[] = [];
-  response!: { dbPath: '' };
-
-  progress!: number;
-  message!: string;
+  mode!: 'add' | 'edit' ;
+  productId!: string;
   imageURL!: string;
+  formHeading!: string;
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
     private supplierService: SupplierService,
-    private productService: ProductService
+    private productService: ProductService,
+    private imagePathService: ImagePathService
   ) {}
 
   ngOnInit(): void {
+    this.formInitialize();
+    this.getSuppliers();
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.mode = 'edit';
+        this.formHeading = 'Edit Product'
+        this.productId = params['id'];
+        this.loadProduct(this.productId);
+      } else {
+        this.mode = 'add';  
+        this.formHeading = 'Add New Product'
+      }
+    }); 
+  }
+
+  formInitialize(): void{
+    this.addProductForm = this.fb.group({
+      title: new FormControl('', Validators.required),
+      productSKU:new FormControl ('', Validators.required),
+      costPrice: new FormControl (
+        '',
+        [Validators.required, Validators.min(0.1)],
+    ),
+      sellingPrice: new FormControl(
+        '',
+        [Validators.required, Validators.min(0.1)],
+      ),
+      supplierId:new FormControl('', Validators.required),
+    });
+
+  }
+
+  loadProduct(id: string) {
+    this.productService.getProduct(id).subscribe((response) => {
+      this.addProductForm.patchValue(response);
+      this.imageURL = this.imagePathService.getImageFullPath(response.imagePath);
+    });
+
+  }
+
+  getSuppliers():void{
     this.supplierService.getAllSuppliers().subscribe({
       next: (supplier) => {
         this.suppliers = supplier;
@@ -39,88 +81,46 @@ export class AddProductComponent implements OnInit {
         console.log(response);
       },
     });
-
-    this.product = {
-      id: '00000000-0000-0000-0000-000000000000',
-      title: '',
-      productSKU: '',
-      costPrice: 0,
-      sellingPrice: 0,
-      supplierId: '',
-      imagePath: '',
-    };
-    this.addProductForm = this.fb.group({
-      title: [this.product.title, Validators.required],
-      productSKU: [this.product.productSKU, Validators.required],
-      costPrice: [
-        this.product.costPrice,
-        [Validators.required, Validators.min(0.1)],
-      ],
-      sellingPrice: [
-        this.product.sellingPrice,
-        [Validators.required, Validators.min(0.1)],
-      ],
-      supplierId: [this.product.supplierId, Validators.required],
-    });
-
-    this.addProductForm.valueChanges.subscribe((data) => {
-      this.product = { ...this.product, ...data };
-    });
   }
 
   onSave() {
     if (this.addProductForm.valid) {
-      this.product.imagePath = this.response.dbPath;
-      this.productService.addProduct(this.product).subscribe({
-        next: (response) => {
-          this.router.navigate(['productlist']);
-        },
-        error: (err) => {
-          console.error('Error:', err);
-          const errorMessage =
-            err && err.error && err.error.message
-              ? err.error.message
-              : 'An error occurred';
-          alert(errorMessage);
-        },
-      });
+      var product:Product = this.addProductForm.value as Product;
+      var formData = new FormData();
+      formData.append('image', this.image);
+      formData.append('product',JSON.stringify(product))
+      if (this.mode === 'add') {
+       this.productService.addProduct(formData).subscribe({
+         next: (response) => {
+           console.log(response);
+           this.router.navigate(['productlist']);
+         },
+       });
+     } else if (this.mode === 'edit') {
+       this.productService.updateProduct(this.productId, formData).subscribe({
+         next: (response) => {
+           console.log(response);
+           this.router.navigate(['productlist']);
+         },
+       });
+     }
     } else {
       ValidateForm.validateAllFormFields(this.addProductForm);
     }
   }
 
   //upload image and adding to api resource folder
-  uploadFile = (files: any) => {
-    if (files.length === 0) {
-      return;
-    }
-
-    let fileToUpload = <File>files[0];
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
+  uploadFile (evt:any) {
+    this.image =evt.target.files[0];
 
     //Show image preview
     let reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageURL = event.target.result;
     };
-    reader.readAsDataURL(fileToUpload);
+    reader.readAsDataURL(this.image);
 
-    this.supplierService.uploadImage(formData).subscribe({
-      next: (event) => {
-        if (event.type === HttpEventType.UploadProgress)
-          this.progress = Math.round((100 * event.loaded) / (event.total || 1));
-        else if (event.type === HttpEventType.Response) {
-          this.message = 'Upload success.';
-          this.uploadFinished(event.body);
-        }
-      },
-      error: (err: HttpErrorResponse) => console.log(err),
-    });
-  };
-
-  public uploadFinished(event: any) {
-    this.response = event;
+    
   }
 
   calculateProfit(): number {

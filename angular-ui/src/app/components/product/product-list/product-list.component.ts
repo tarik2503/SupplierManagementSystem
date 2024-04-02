@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
 import { SupplierService } from '../../../services/supplier.service';
+import { ImagePathService } from '../../../services/image-path.service';
 
 @Component({
   selector: 'app-product-list',
@@ -14,7 +15,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private supplierService: SupplierService
+    private supplierService: SupplierService,
+    private imagePathService:ImagePathService
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +59,6 @@ export class ProductListComponent implements OnInit {
   }
 
   createImagePath(serverPath: string) {
-    return this.supplierService.getImageFullPath(serverPath);
+    return this.imagePathService.getImageFullPath(serverPath);
   }
 }

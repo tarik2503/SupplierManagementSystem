@@ -23,6 +23,15 @@ namespace SupplierManagement.API.Repository
 
         }
 
+        public async Task<IEnumerable<Product>> GetProductsBySupplierId(string userId, Guid supplierId)
+        {
+
+            var products = _context.Suppliers.Where(s => s.UserId == userId)
+                                    .SelectMany(s => s.Products).Where(p => !p.IsDeleted && p.SupplierId == supplierId);
+            return products.ToList();
+
+        }
+
         public async Task<Product> GetProductBySKU(string SKU)
         {
             return await _context.Products

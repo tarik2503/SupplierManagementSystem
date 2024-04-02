@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SupplierManagement.API.Helpers;
 using SupplierManagement.API.IRepository;
 using SupplierManagement.Data.Models;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 
 namespace SupplierManagement.API.Controllers
@@ -57,20 +57,29 @@ namespace SupplierManagement.API.Controllers
             }
         }
 
+        [Consumes("multipart/form-data")]
+        [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> AddSupplier([FromBody] Supplier supplier)
+        public async Task<IActionResult> AddSupplier(IFormFile image, IFormCollection formCollection)
         {
             try
             {
+                var supplier = JsonConvert.DeserializeObject<Supplier>(formCollection["supplier"]);
                 if (supplier == null)
                 {
                     return BadRequest();
                 }
-                supplier.Id = Guid.NewGuid();
-                supplier.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var addSupplier = await _supplier.AddSupplier(supplier);
-
-                return Ok(addSupplier);
+               
+                if (image.Length > 0)
+                {                   
+                    supplier.ImgPath =  UploadFile.uploadImageFile(image);                   
+                    supplier.Id = Guid.NewGuid();
+                    supplier.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    var addSupplier = await _supplier.AddSupplier(supplier);
+                    return Ok(addSupplier);
+                }
+  
+                return BadRequest("Image Not Found");
             }
             catch (Exception)
             {
@@ -79,10 +88,12 @@ namespace SupplierManagement.API.Controllers
             }
         }
 
+        [Consumes("multipart/form-data")]
+        [Produces("application/json")]
         [HttpPut]
         [Route("{id:Guid}")]
 
-        public async Task<IActionResult> UpdateSupplier([FromRoute] Guid id, Supplier supplier)
+        public async Task<IActionResult> UpdateSupplier([FromRoute] Guid id, IFormFile? image, IFormCollection formCollection)
         {
             var updateSupplier = await _supplier.GetSupplier(id);
 
@@ -90,11 +101,21 @@ namespace SupplierManagement.API.Controllers
             {
                 return NotFound();
             }
-            supplier.Id = updateSupplier.Id;
-            var  updatedSupplier = await _supplier.UpdateSupplier(supplier);
 
-            return Ok(updatedSupplier);
+            var supplier = JsonConvert.DeserializeObject<Supplier>(formCollection["supplier"]);
 
+            if (image?.Length > 0)
+            {
+                supplier.ImgPath = UploadFile.uploadImageFile(image);
+            }
+            else
+            {
+                supplier.ImgPath = updateSupplier.ImgPath;
+            }
+
+                supplier.Id = updateSupplier.Id;
+                var  updatedSupplier = await _supplier.UpdateSupplier(supplier);
+                return Ok(updatedSupplier);  
         }
 
         [HttpDelete]
@@ -121,37 +142,7 @@ namespace SupplierManagement.API.Controllers
         }
 
 
-        [HttpPost, DisableRequestSizeLimit]
-        [Route("image")]
-        public async Task<IActionResult> UploadEmployeeImage()
-        {
-            try
-            {
-                var formCollection = await Request.ReadFormAsync();
-                var file = formCollection.Files.First();
-                var folderName = Path.Combine("Resources", "Images");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                if (file.Length > 0)
-                {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
-                    return Ok(new { dbPath });
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex}");
-            }
-        }
+       
 
     }
 }

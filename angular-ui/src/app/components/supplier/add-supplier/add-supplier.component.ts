@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SupplierService } from '../../../services/supplier.service';
 import ValidateForm from '../../../helpers/validateform';
-import {
-  HttpErrorResponse,
-  HttpEventType,
-  HttpResponse,
-} from '@angular/common/http';
 import { Supplier } from '../../../models/supplier.model';
+import { ImagePathService } from '../../../services/image-path.service';
 
 @Component({
   selector: 'app-add-supplier',
@@ -17,96 +13,95 @@ import { Supplier } from '../../../models/supplier.model';
 })
 export class AddSupplierComponent implements OnInit {
   addSupplierForm!: FormGroup;
-  response!: { dbPath: '' };
-  supplier!: Supplier;
-
-  progress!: number;
-  message!: string;
+  image!: File;
   imageURL!: string;
-
+  mode!: 'add' | 'edit';
+  supplierId!: string;
+  formHeading!: string;
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private supplierService: SupplierService
+    private route: ActivatedRoute,
+    private supplierService: SupplierService,
+    private imagePathService:ImagePathService
   ) {}
 
   ngOnInit(): void {
-    this.supplier = {
-      id: '00000000-0000-0000-0000-000000000000',
-      supplierName: '',
-      email: '',
-      phone: '',
-      street: '',
-      city: '',
-      state: '',
-      country: '',
-      zipCode: '',
-      imgPath: '',
-    };
-
-    this.addSupplierForm = this.fb.group({
-      supplierName: [this.supplier.supplierName, Validators.required],
-      email: [this.supplier.email, [Validators.required, Validators.email]],
-      phone: [
-        this.supplier.phone,
-        [Validators.required, Validators.pattern(/^\(?\d{5}\)?[-.\s]?\d{5}$/)],
-      ],
-      street: [this.supplier.street, Validators.required],
-      city: [this.supplier.city, Validators.required],
-      state: [this.supplier.state, Validators.required],
-      country: [this.supplier.country, Validators.required],
-      zipCode: [this.supplier.zipCode, Validators.required],
-    });
-
-    this.addSupplierForm.valueChanges.subscribe((data) => {
-      this.supplier = { ...this.supplier, ...data };
+    this.formInitialize();
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.mode = 'edit';
+        this.formHeading='Edit Supplier';
+        this.supplierId = params['id'];
+        this.loadSupplier(this.supplierId);
+      } else {
+        this.mode = 'add';  
+        this.formHeading='Add New Supplier';
+      }
     });
   }
 
+  formInitialize(): void {
+    this.addSupplierForm = this.fb.group({
+      supplierName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl(
+        '',
+        [Validators.required, Validators.pattern(/^\(?\d{5}\)?[-.\s]?\d{5}$/)],
+      ),
+      street: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
+      zipCode: new FormControl('', Validators.required),
+    });
+  }
+
+
+  loadSupplier(id: string) {
+    this.supplierService.getSupplier(id).subscribe((response) => {
+      this.addSupplierForm.patchValue(response);
+      this.imageURL = this.imagePathService.getImageFullPath(response.imgPath);
+    });
+
+  }
+
   onSave() {
-    if (this.addSupplierForm.valid) {
-      this.supplier.imgPath = this.response.dbPath;
-      this.supplierService.addSupplier(this.supplier).subscribe({
-        next: (response) => {
-          this.router.navigate(['supplierlist']);
-        },
-      });
+    if (this.addSupplierForm.valid) {       
+   var supplier:Supplier = this.addSupplierForm.value as Supplier;
+   var formData = new FormData();
+   formData.append('image', this.image);
+   console.log(this.image);
+   formData.append('supplier',JSON.stringify(supplier))
+   if (this.mode === 'add') {
+    this.supplierService.addSupplier(formData).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.router.navigate(['supplierlist']);
+      },
+    });
+  } else if (this.mode === 'edit') {
+    this.supplierService.updateSupplier(this.supplierId, formData).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.router.navigate(['supplierlist']);
+      },
+    });
+  }
     } else {
       ValidateForm.validateAllFormFields(this.addSupplierForm);
     }
   }
 
   //upload image and adding to api resource folder
-  uploadFile = (files: any) => {
-    if (files.length === 0) {
-      return;
-    }
-
-    let fileToUpload = <File>files[0];
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-
+  uploadFile(evt: any){
+    this.image =evt.target.files[0];
+   
     //Show image preview
     let reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageURL = event.target.result;
     };
-    reader.readAsDataURL(fileToUpload);
-
-    this.supplierService.uploadImage(formData).subscribe({
-      next: (event) => {
-        if (event.type === HttpEventType.UploadProgress)
-          this.progress = Math.round((100 * event.loaded) / (event.total || 1));
-        else if (event.type === HttpEventType.Response) {
-          this.message = 'Upload success.';
-          this.uploadFinished(event.body);
-        }
-      },
-      error: (err: HttpErrorResponse) => console.log(err),
-    });
-  };
-
-  public uploadFinished(event: any) {
-    this.response = event;
+    reader.readAsDataURL(this.image);  
   }
 }

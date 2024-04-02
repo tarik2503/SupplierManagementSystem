@@ -52,14 +52,14 @@ namespace SupplierManagement.Data.Migrations
                         new
                         {
                             Id = "bab5ce50-84b3-456c-98f1-d7ff6d40e46e",
-                            ConcurrencyStamp = "012b746e-14d9-45b5-a42d-fbb74b151ba7",
+                            ConcurrencyStamp = "4fab5f4e-4373-45a8-8de4-76e4acc1c872",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "be4a0261-3e09-46cf-896a-74275d5ef8cd",
-                            ConcurrencyStamp = "8438ebd8-a20a-438e-b29d-05de077d81d9",
+                            ConcurrencyStamp = "10ba2929-12ab-4fe8-b3cc-c1ce24d7cc25",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -183,6 +183,29 @@ namespace SupplierManagement.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SupplierManagement.Data.Models.LastPONumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<long>("LastNumber")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LastPONumbers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            LastNumber = 1000L
+                        });
+                });
+
             modelBuilder.Entity("SupplierManagement.Data.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -218,6 +241,53 @@ namespace SupplierManagement.Data.Migrations
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("SupplierManagement.Data.Models.ProductList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PurchaseOrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("ProductLists");
+                });
+
+            modelBuilder.Entity("SupplierManagement.Data.Models.PurchaseOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PONumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("PurchaseOrders");
                 });
 
             modelBuilder.Entity("SupplierManagement.Data.Models.Supplier", b =>
@@ -349,16 +419,16 @@ namespace SupplierManagement.Data.Migrations
                         {
                             Id = "1cfdbb18-b4f8-40c1-9d79-0498d2001c32",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "913c9fba-de7d-45d3-8acf-cdf3bdf2b36c",
+                            ConcurrencyStamp = "8862cc78-d3b4-498c-a4de-d368f7fe786f",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User",
                             LastName = "User",
                             LockoutEnabled = false,
                             NormalizedEmail = "user@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAED8XBMb43HYI2+gWJCdFlheyHT3JpbBAYoinj3xXH0hF85EsGe5i40w5MqyTQITfNg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBYt4cRBK0XQmHkCdCkbccdJMK3xgEjMRg+FzoqOwiUE++t7wBdk37Z/LemWf5Q0dQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "85d5c3b2-9036-4624-a719-f660a91f783d",
+                            SecurityStamp = "a9d34b67-81ca-4ced-bc17-bfc92b7ffad8",
                             TwoFactorEnabled = false,
                             UserName = "user@gmail.com"
                         },
@@ -366,16 +436,16 @@ namespace SupplierManagement.Data.Migrations
                         {
                             Id = "8c1e9f47-a2b2-43a2-8a23-53a9710e3248",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ea69f7a9-ae49-49a3-9e03-52817258f635",
+                            ConcurrencyStamp = "3f0ee78f-a736-45dd-ae3d-5272697f51ca",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
                             LastName = "Admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOIQUY8DDeR/8kIlR4gQc8yqYAcr1lVyDjn6jflzoTxMdX9oYGQxbPJWPS0HLOD+Rw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFXQtUnaiCYTtKM5m9UwsHUIf8ASv4kDgVBew27KCCU1SFRHcJkY1NIsgqNwoNk03g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "061ff912-faea-42e1-bb9e-66f863a6d68f",
+                            SecurityStamp = "c9893e76-5b1c-479e-9065-40d4449ec226",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -443,6 +513,32 @@ namespace SupplierManagement.Data.Migrations
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("SupplierManagement.Data.Models.ProductList", b =>
+                {
+                    b.HasOne("SupplierManagement.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupplierManagement.Data.Models.PurchaseOrder", null)
+                        .WithMany("Products")
+                        .HasForeignKey("PurchaseOrderId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("SupplierManagement.Data.Models.PurchaseOrder", b =>
+                {
+                    b.HasOne("SupplierManagement.Data.Models.Supplier", "Supplier")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("SupplierManagement.Data.Models.Supplier", b =>
                 {
                     b.HasOne("SupplierManagement.Data.Models.User", "User")
@@ -452,9 +548,16 @@ namespace SupplierManagement.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SupplierManagement.Data.Models.PurchaseOrder", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("SupplierManagement.Data.Models.Supplier", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("PurchaseOrders");
                 });
 #pragma warning restore 612, 618
         }

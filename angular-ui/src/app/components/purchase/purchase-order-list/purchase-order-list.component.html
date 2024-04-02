@@ -1,1 +1,36 @@
-<p>purchase-order-list works!</p>
+<div class="container my-2">
+    <a class="btn btn-primary mb-2" routerLink="/purchaseorder/add">Create Order</a>
+    <h1 class="mb-3">Purchase Orders</h1>
+  
+    <table class="table table-striped table-bordered shadow text-center">
+      <thead class="bg-dark text-light">
+        <tr>
+          <th>Sr. No.</th>
+          <th>PO-Number</th>
+          <th>Seller</th>
+          <th>Delivery-Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let purchaseOrder of purchaseOrders; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ purchaseOrder.poNumber }}</td>
+          <td>{{ getSupplierName(purchaseOrder.supplierId)}}</td>
+          <td>{{ purchaseOrder.deliveryDate | date }}</td>
+          <td>
+            <a
+              [routerLink]="['/purchaseorder', 'edit', purchaseOrder.id]"
+              class="btn btn-success mx-1 mt-1"
+              >Edit</a
+            >
+            <a (click)="deleteFn(purchaseOrder.id)" class="btn btn-danger mt-1"
+              >Delete</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="!purchaseOrders || purchaseOrders.length <= 0">No Orders Found!</p>
+  </div>
+  

@@ -5,10 +5,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SupplierListComponent } from './components/supplier/supplier-list/supplier-list.component';
 import { authGuard } from './guards/auth.guard';
 import { AddSupplierComponent } from './components/supplier/add-supplier/add-supplier.component';
-import { EditSupplierComponent } from './components/supplier/edit-supplier/edit-supplier.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { AddProductComponent } from './components/product/add-product/add-product.component';
-import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PurchaseOrderListComponent } from './components/purchase/purchase-order-list/purchase-order-list.component';
 import { AddPurchaseOrderComponent } from './components/purchase/add-purchase-order/add-purchase-order.component';
@@ -32,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'supplier/edit/:id',
-    component: EditSupplierComponent,
+    component: AddSupplierComponent,
     canActivate: [authGuard],
   },
   {
@@ -47,7 +45,7 @@ const routes: Routes = [
   },
   {
     path: 'product/edit/:id',
-    component: EditProductComponent,
+    component: AddProductComponent,
     canActivate: [authGuard],
   },
   {

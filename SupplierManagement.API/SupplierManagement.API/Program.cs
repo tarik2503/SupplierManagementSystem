@@ -30,6 +30,7 @@ builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<Supp
 builder.Services.AddScoped<IAccount, AccountRepo>();
 builder.Services.AddScoped<ISupplier, SupplierRepo>();
 builder.Services.AddScoped<IProduct, ProductRepo>();
+builder.Services.AddScoped<IPurchaseOrder, PurchaseOrderRepo>();
 
 // File or Image upload
 builder.Services.Configure<FormOptions>(o =>

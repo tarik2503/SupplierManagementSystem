@@ -1,5 +1,5 @@
 <div class="container my-2">
-  <h1 class="mb-1">Add New Supplier</h1>
+  <h1 class="mb-1">{{formHeading}}</h1>
 
   <div class="row justify-content-center ">
     <div class="col-lg-12 mt-0">
@@ -47,7 +47,7 @@
                 id="file"
                 class="form-control"
                 style="display: none"
-                (change)="uploadFile(file.files)"
+                (change)="uploadFile($event)"
               />
               <button
                 type="button"
@@ -57,10 +57,7 @@
                 Choose Image
               </button>
             </div>
-            <div class="mt-2">
-              <span class="upload" *ngIf="progress > 0">{{ progress }}%</span>
-              <span class="upload" *ngIf="message">{{ message }}</span>
-            </div>
+          
 
             <!-- add image -->
           </div>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SupplierManagement.API.Helpers;
 using SupplierManagement.API.IRepository;
 using SupplierManagement.Data.Models;
 using System.Security.Claims;
@@ -35,6 +37,22 @@ namespace SupplierManagement.API.Controllers
         }
 
         [HttpGet]
+        [Route("supplier/{supplierId:Guid}")]
+        public async Task<ActionResult> GetProductsBySupplierId([FromRoute] Guid supplierId)
+        {
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                return Ok(await _product.GetProductsBySupplierId(userId, supplierId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+
+        [HttpGet]
         [Route("{id:Guid}")]
         public async Task<ActionResult<Product>> GetProduct(Guid id)
         {
@@ -56,11 +74,14 @@ namespace SupplierManagement.API.Controllers
             }
         }
 
+        [Consumes("multipart/form-data")]
+        [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> AddProduct([FromBody] Product product)
+        public async Task<IActionResult> AddProduct(IFormFile image, IFormCollection formCollection)
         {
             try
             {
+                var product = JsonConvert.DeserializeObject<Product>(formCollection["product"]);
                 if (product == null)
                 {
                     return BadRequest();
@@ -71,14 +92,19 @@ namespace SupplierManagement.API.Controllers
                 {
                     return NotFound(new
                     {
-                        Message = $"Product with SKU: {checkProduct.ProductSKU} already exist!"
+                        message = $"product with sku: {checkProduct.ProductSKU} already exist!"
                     });
                 }
-                product.Id = Guid.NewGuid();
-                
-                var addProduct = await _product.AddProduct(product);
 
-                return Ok(addProduct);
+                if (image.Length > 0)
+                {
+                    product.ImagePath = UploadFile.uploadImageFile(image);
+                    product.Id = Guid.NewGuid();
+                    var addProduct = await _product.AddProduct(product);
+                    return Ok(addProduct);
+                }
+
+                return BadRequest("Image Not Found");            
             }
             catch (Exception)
             {
@@ -87,20 +113,32 @@ namespace SupplierManagement.API.Controllers
             }
         }
 
+        [Consumes("multipart/form-data")]
+        [Produces("application/json")]
         [HttpPut]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, Product product)
+        public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, IFormFile? image, IFormCollection formCollection)
         {
             var updateProduct = await _product.GetProduct(id);
-
             if (updateProduct == null)
             {
                 return NotFound();
             }
+
+            var product = JsonConvert.DeserializeObject<Product>(formCollection["product"]);
+
+            if (image?.Length > 0)
+            {
+                product.ImagePath = UploadFile.uploadImageFile(image);
+            }
+            else
+            {
+                product.ImagePath = updateProduct.ImagePath;
+            }
+
             product.Id = updateProduct.Id;
             var updatedProduct = await _product.UpdateProduct(product);
-
-            return Ok(updatedProduct);
+            return Ok(updatedProduct); 
 
         }
 

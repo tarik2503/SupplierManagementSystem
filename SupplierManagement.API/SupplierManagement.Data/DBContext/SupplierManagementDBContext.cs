@@ -21,6 +21,11 @@ namespace SupplierManagement.Data.DBContext
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+
+        public DbSet<ProductList> ProductLists { get; set; }
+        public DbSet<LastPONumber> LastPONumbers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -28,6 +33,8 @@ namespace SupplierManagement.Data.DBContext
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+
+            modelBuilder.Entity<LastPONumber>().HasData(new LastPONumber { Id = 1, LastNumber = 1000 });
         }
     }
 }

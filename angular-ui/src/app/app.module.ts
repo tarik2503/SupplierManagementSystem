@@ -15,12 +15,9 @@ import { SupplierListComponent } from './components/supplier/supplier-list/suppl
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { AddSupplierComponent } from './components/supplier/add-supplier/add-supplier.component';
-import { EditSupplierComponent } from './components/supplier/edit-supplier/edit-supplier.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { AddProductComponent } from './components/product/add-product/add-product.component';
-import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
-
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AddPurchaseOrderComponent } from './components/purchase/add-purchase-order/add-purchase-order.component';
 import { PurchaseOrderListComponent } from './components/purchase/purchase-order-list/purchase-order-list.component';
@@ -34,10 +31,8 @@ import { PurchaseOrderListComponent } from './components/purchase/purchase-order
     SignupComponent,
     SupplierListComponent,
     AddSupplierComponent,
-    EditSupplierComponent,
     ProductListComponent,
     AddProductComponent,
-    EditProductComponent, 
     DashboardComponent, AddPurchaseOrderComponent, PurchaseOrderListComponent,
   ],
   imports: [
