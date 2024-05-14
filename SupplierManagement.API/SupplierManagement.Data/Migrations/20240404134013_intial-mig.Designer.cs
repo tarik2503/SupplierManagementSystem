@@ -12,8 +12,8 @@ using SupplierManagement.Data.DBContext;
 namespace SupplierManagement.Data.Migrations
 {
     [DbContext(typeof(SupplierManagementDBContext))]
-    [Migration("20240402091425_initial-mig")]
-    partial class initialmig
+    [Migration("20240404134013_intial-mig")]
+    partial class intialmig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,14 +54,14 @@ namespace SupplierManagement.Data.Migrations
                         new
                         {
                             Id = "bab5ce50-84b3-456c-98f1-d7ff6d40e46e",
-                            ConcurrencyStamp = "4fab5f4e-4373-45a8-8de4-76e4acc1c872",
+                            ConcurrencyStamp = "8b8ef47c-5ca6-49d4-b37b-4b007675edbd",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "be4a0261-3e09-46cf-896a-74275d5ef8cd",
-                            ConcurrencyStamp = "10ba2929-12ab-4fe8-b3cc-c1ce24d7cc25",
+                            ConcurrencyStamp = "cc0d9574-e881-4b4a-8358-ca2cea5ed21c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -421,16 +421,16 @@ namespace SupplierManagement.Data.Migrations
                         {
                             Id = "1cfdbb18-b4f8-40c1-9d79-0498d2001c32",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8862cc78-d3b4-498c-a4de-d368f7fe786f",
+                            ConcurrencyStamp = "321ee2ac-d8e3-4648-8b56-43a84952ab57",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User",
                             LastName = "User",
                             LockoutEnabled = false,
                             NormalizedEmail = "user@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBYt4cRBK0XQmHkCdCkbccdJMK3xgEjMRg+FzoqOwiUE++t7wBdk37Z/LemWf5Q0dQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKtOZbtQQLpEI7bgjbSpRYpogtaxC3D9Fhfxi+WHZuwlvIdbUR99anl85LTo497HyA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a9d34b67-81ca-4ced-bc17-bfc92b7ffad8",
+                            SecurityStamp = "c795e986-61e9-482a-84c0-dc89a62601d3",
                             TwoFactorEnabled = false,
                             UserName = "user@gmail.com"
                         },
@@ -438,16 +438,16 @@ namespace SupplierManagement.Data.Migrations
                         {
                             Id = "8c1e9f47-a2b2-43a2-8a23-53a9710e3248",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f0ee78f-a736-45dd-ae3d-5272697f51ca",
+                            ConcurrencyStamp = "09bd94bd-dc31-43a9-b7a3-441eb47e88d8",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
                             LastName = "Admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFXQtUnaiCYTtKM5m9UwsHUIf8ASv4kDgVBew27KCCU1SFRHcJkY1NIsgqNwoNk03g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHMb0F3uFPz1ozmcSM5eJwKXkDjJEinHlCgeukRiHaHs1PnypjwJXsmz/uMvEsuJ7Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c9893e76-5b1c-479e-9065-40d4449ec226",
+                            SecurityStamp = "b902100f-688a-42de-b30a-75f92bb57637",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -524,7 +524,7 @@ namespace SupplierManagement.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("SupplierManagement.Data.Models.PurchaseOrder", null)
-                        .WithMany("Products")
+                        .WithMany("ProductLists")
                         .HasForeignKey("PurchaseOrderId");
 
                     b.Navigation("Product");
@@ -552,7 +552,7 @@ namespace SupplierManagement.Data.Migrations
 
             modelBuilder.Entity("SupplierManagement.Data.Models.PurchaseOrder", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("ProductLists");
                 });
 
             modelBuilder.Entity("SupplierManagement.Data.Models.Supplier", b =>

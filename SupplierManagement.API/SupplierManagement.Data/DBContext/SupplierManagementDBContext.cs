@@ -35,6 +35,12 @@ namespace SupplierManagement.Data.DBContext
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
 
             modelBuilder.Entity<LastPONumber>().HasData(new LastPONumber { Id = 1, LastNumber = 1000 });
+
+            modelBuilder.Entity<ProductList>()
+       .HasOne(pl => pl.PurchaseOrder)
+       .WithMany(po => po.Products)
+       .HasForeignKey(pl => pl.PurchaseOrderId)
+       .OnDelete(DeleteBehavior.Restrict); // Specify ON DELETE NO ACTION
         }
     }
 }

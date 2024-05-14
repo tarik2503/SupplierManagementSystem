@@ -1,14 +1,10 @@
-<div class="container my-2">
-  <h1 class="mb-3">Add Purchase Order</h1>
+<div class="container my-3">
+  <h1 class="mb-3">{{formHeading}}</h1>
   <div class="row justify-content-center">
     <div class="col-lg-12 mt-2">
       <form [formGroup]="purchaseOrderForm">
         <div class="row mb-2">
-          <!-- <div class="col-md-9"></div> -->
-
-          <div
-            class="col-md-12 d-flex align-items-center justify-content-end me-5"
-          >
+          <div class="col-md-12 d-flex align-items-center justify-content-end">
             <div class="d-flex">
               <button type="button" (click)="onSave()" class="btn btn-primary">
                 Save
@@ -22,8 +18,8 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <div class="col-md-4 mt-2 shadow bg-light border p-3 mx-4">
+        <div class="row mb-4 justify-content-evenly">
+          <div class="col-md-4 mt-2 shadow bg-light border p-3">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="supplier" class="form-label">Supplier</label>
@@ -34,7 +30,7 @@
                     [value]="supplier.id"
                   >
                     {{ supplier.supplierName }}
-                  </option>
+                  </option>                  
                 </select>
                 <small
                   class="text-danger"
@@ -97,7 +93,7 @@
                     let productGroup of productsArray.controls;
                     let i = index
                   "
-                  class="row mt-3"
+                  class="row mb-3"
                   [formGroupName]="i"
                 >
                   <div class="col-md-4">
@@ -151,7 +147,7 @@
                       class="text-danger"
                       *ngIf="
                         productGroup.get('quantity')?.dirty &&
-                        productGroup.get('quantity')?.hasError('min')
+                        productGroup.get('quantity')?.hasError('min')                        
                       "
                     >
                       *At least 1 unit is required
@@ -211,4 +207,107 @@
       </form>
     </div>
   </div>
+
+ 
+
+  <!-- Invoice -->
+  <ng-container *ngIf="selectedSupplier">
+    <div class="row justify-content-center bg-light shadow border mx-3">
+      <div class="col-md-11 mt-2">
+        
+        <div class="row justify-content-evenly mt-2">
+          <div class="col-md-3">
+            <div class="mt-1" >
+              <h5 class="company-logo">Logo</h5>
+              <h6>Company Name</h6>
+              <pre>
+address-xxxx,
+email&#64;gmail.com,
++919191919191
+</pre
+              >
+            </div>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-3"></div>
+        </div>
+        <div class="row justify-content-evenly mt-2 bg-color-invoice pt-2  ">
+          <div class="col-md-3 ">
+            <div class="mt-1" >
+              <p class="invoic-headings mb-1">SUPPLIER INFORMATION:</p>
+              <p class="mb-1">Name: {{ selectedSupplier.supplierName }}</p>
+              <pre class="pre-wrapper">
+{{ selectedSupplier.street }}, {{ selectedSupplier.city }}, {{ selectedSupplier.state }},
+Zip-Code: {{ selectedSupplier.zipCode }}, {{ selectedSupplier.country }}.
+{{ selectedSupplier.email }},
+{{ selectedSupplier.phone }}
+              </pre>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mt-1" >
+              <p class="invoic-headings mb-1">ORDER INFORMATION:</p>
+              <p class="mb-0">Date: {{ currentDate | date }}</p>
+              <p class="mb-0">Status: Pending</p>
+              <p
+                class="mb-0"
+                *ngIf="purchaseOrderForm.get('deliveryDate')?.value"
+              >
+                Delivery-Date:
+                {{ purchaseOrderForm.get("deliveryDate")?.value | date }}
+              </p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mt-1" >
+              <p class="invoic-headings mb-1">PO-Number: {{poUniqueNumber}}</p>
+              <p class="company-logo">TOTAL:₹{{totalInvoiceAmount}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-evenly mt-2">
+          <div class="col-md-11">
+          <table  class="table text-center mt-2">       
+            <tr class="thead-bgColor p-3">
+              <th>Sr. No.</th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+              <th>Total</th>
+            </tr>
+          
+          <tbody>           
+            <tr *ngFor="let product of addedProducts; let i = index">
+              <ng-container *ngIf="product.productId">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <p>{{ getProductTitle(product.productId) }}</p>
+              </td>
+              <td>
+                <p>{{ product.quantity }}</p>
+              </td>
+              <td>
+                <p>₹{{ getProductSellingPrice(product.productId) }}</p>
+              </td>
+              <td>
+                <p>₹{{ calculatePrice(product.productId, product.quantity) }}</p>
+              </td>
+            </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        </div>
+
+        <div class="row justify-content-center mt-2">
+          <div class="col-md-11">
+          <h6 class="fw-semibold tandc mb-0">Terms and Conditions*</h6>
+          <p class="tandc-font"> This CSS style ensures that the content inside the tag wraps when necessary, preventing horizontal scrolling. Try applying this solution and see if it resolves the issue. If not, there might be other factors</p>
+          </div>
+        </div>
+        
+        </div>
+      </div>
+    
+  </ng-container>  
 </div>

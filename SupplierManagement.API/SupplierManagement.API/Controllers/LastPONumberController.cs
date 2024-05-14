@@ -18,28 +18,35 @@ namespace SupplierManagement.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<long>> GetLastPONumber()
+        public async Task<ActionResult<LastPONumber>> GetLastPONumber()
         {
             var lastPONumber = await _context.LastPONumbers.FirstOrDefaultAsync();
-            return lastPONumber?.LastNumber ?? 1000;
+           
+            if(lastPONumber == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(lastPONumber);
+
+            
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateLastPONumber(long newLastNumber)
+        public async Task<IActionResult> UpdateLastPONumber(LastPONumber lastNumber)
         {
             var lastPONumber = await _context.LastPONumbers.FirstOrDefaultAsync();
             if (lastPONumber == null)
-            {
-                lastPONumber = new LastPONumber { LastNumber = newLastNumber };
-                _context.LastPONumbers.Add(lastPONumber);
+            {   
+                _context.LastPONumbers.Add(lastNumber);
             }
             else
             {
-                lastPONumber.LastNumber = newLastNumber;
+                lastPONumber.LastNumber = lastNumber.LastNumber;
             }
 
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(lastPONumber);
         }
     }
 }

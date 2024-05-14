@@ -106,6 +106,7 @@ C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Microsoft.OpenApi.dll
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -152,4 +153,6 @@ C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\obj\Debug\net6.0\SupplierManagement.API.pdb
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\obj\Debug\net6.0\SupplierManagement.API.genruntimeconfig.cache
 C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\obj\Debug\net6.0\ref\SupplierManagement.API.dll
-C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\hp\Desktop\SupplierManagement\SupplierManagement.API\SupplierManagement.API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

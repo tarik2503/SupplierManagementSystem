@@ -52,14 +52,14 @@ namespace SupplierManagement.Data.Migrations
                         new
                         {
                             Id = "bab5ce50-84b3-456c-98f1-d7ff6d40e46e",
-                            ConcurrencyStamp = "4fab5f4e-4373-45a8-8de4-76e4acc1c872",
+                            ConcurrencyStamp = "a833f118-46e5-40a1-806d-3dd898166ef8",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "be4a0261-3e09-46cf-896a-74275d5ef8cd",
-                            ConcurrencyStamp = "10ba2929-12ab-4fe8-b3cc-c1ce24d7cc25",
+                            ConcurrencyStamp = "49b9c01e-1396-4e97-9a78-89e9214b7b69",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -249,10 +249,13 @@ namespace SupplierManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PurchaseOrderId")
+                    b.Property<Guid>("PurchaseOrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -275,6 +278,9 @@ namespace SupplierManagement.Data.Migrations
 
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PONumber")
                         .IsRequired()
@@ -419,16 +425,16 @@ namespace SupplierManagement.Data.Migrations
                         {
                             Id = "1cfdbb18-b4f8-40c1-9d79-0498d2001c32",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8862cc78-d3b4-498c-a4de-d368f7fe786f",
+                            ConcurrencyStamp = "d115011c-504c-4af3-b372-67e1b08b7ff1",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User",
                             LastName = "User",
                             LockoutEnabled = false,
                             NormalizedEmail = "user@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBYt4cRBK0XQmHkCdCkbccdJMK3xgEjMRg+FzoqOwiUE++t7wBdk37Z/LemWf5Q0dQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAED/L10VyTSMH5Bl0Lmgw/U1yUpV4C3CU1NxVVz3faf67yoqTcV2jix65KcytRH8qdA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a9d34b67-81ca-4ced-bc17-bfc92b7ffad8",
+                            SecurityStamp = "f41baef6-cdd5-4206-a8ff-9708ff5b0a00",
                             TwoFactorEnabled = false,
                             UserName = "user@gmail.com"
                         },
@@ -436,16 +442,16 @@ namespace SupplierManagement.Data.Migrations
                         {
                             Id = "8c1e9f47-a2b2-43a2-8a23-53a9710e3248",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f0ee78f-a736-45dd-ae3d-5272697f51ca",
+                            ConcurrencyStamp = "c6e4bbd0-b2f4-403c-9e82-138cc2094736",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
                             LastName = "Admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFXQtUnaiCYTtKM5m9UwsHUIf8ASv4kDgVBew27KCCU1SFRHcJkY1NIsgqNwoNk03g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHor2h+JfqY8KteLAq3pUfA4pslyg2O0EVxQsqVjEs/02yEA4vIxfaFz/hilq5vF9Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c9893e76-5b1c-479e-9065-40d4449ec226",
+                            SecurityStamp = "3e3f586d-b8cd-45e6-ace5-38fe0747e90e",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -521,11 +527,15 @@ namespace SupplierManagement.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SupplierManagement.Data.Models.PurchaseOrder", null)
+                    b.HasOne("SupplierManagement.Data.Models.PurchaseOrder", "PurchaseOrder")
                         .WithMany("Products")
-                        .HasForeignKey("PurchaseOrderId");
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("PurchaseOrder");
                 });
 
             modelBuilder.Entity("SupplierManagement.Data.Models.PurchaseOrder", b =>

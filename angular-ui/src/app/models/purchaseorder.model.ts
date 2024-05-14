@@ -1,6 +1,7 @@
 export interface PurchaseOrder {
     id: string;
     poNumber: string;
-    deliveryDate:Date 
+    deliveryDate:Date; 
     supplierId: string;
+    products: any[];
   }

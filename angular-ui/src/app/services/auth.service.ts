@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  i=0
   baseApiUrl: string = environment.baseApiUrl;
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -35,7 +34,6 @@ export class AuthService {
 
   getToken() {
     if (typeof localStorage !== 'undefined') {
-      console.log('inside get token')
       return localStorage.getItem('token');
     }
     return null;

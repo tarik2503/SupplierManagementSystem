@@ -1,4 +1,5 @@
 /* side-bar and header part */
+
 #container {
   display: flex;
   width: 100%;
@@ -8,6 +9,11 @@
 
 #sidebar {
  
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
   width: 200px;
   height: 100%;
   background: #000;
@@ -15,11 +21,16 @@
 }
 #contentContainer {
   flex-grow: 1;
+  margin-left: 200px;
+  margin-top: 60px;
    
 }
 
 #header {
-  
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
   display: flex;
   width: 100%;
   padding: 20px 30px;
@@ -167,7 +178,7 @@ input[type="password"] {
 }
 
 .product-img-preview {
-  width: 45vh;
+  width: 38vh;
   height: 35vh;
   background: #9e9d9d;
   object-fit: cover;
@@ -178,8 +189,36 @@ input[type="password"] {
 }
 
 .upload-btn{
-  margin-left: 34px !important;
+  margin-left: 25px !important;
   width: 200px;
+}
+
+/* add-purchase-order */
+.company-logo{
+  color: #4343ff;
+  font-weight:bold;
+}
+.invoic-headings{
+  font-weight:bold;
+}
+.thead-bgColor{
+  background-color: #C7F6C7;
+}
+.pre-wrapper {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.bg-color-invoice{
+  background-color:#ECECEC;
+}
+.tandc-font{
+  font-size: smaller;
+  padding: 5px;
+  margin-top: 1px;
+  
+}
+.tandc{
+  background-color:#f5f6f7;
 }
 
 

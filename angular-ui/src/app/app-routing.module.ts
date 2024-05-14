@@ -58,6 +58,12 @@ const routes: Routes = [
     component: AddPurchaseOrderComponent,
     canActivate: [authGuard],
   },
+
+  {
+    path: 'purchaseorder/edit/:id',       
+    component: AddPurchaseOrderComponent,
+    canActivate: [authGuard],
+  },
 ];
 
 @NgModule({

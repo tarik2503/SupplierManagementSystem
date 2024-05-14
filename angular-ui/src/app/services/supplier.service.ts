@@ -15,15 +15,15 @@ export class SupplierService {
     return this.http.get<Supplier[]>(this.baseApiUrl + '/api/supplier');
   }
 
-  addSupplier(formData: FormData): Observable<Supplier> {
+  addSupplier(formData: FormData): Observable<Supplier> {   
     return this.http.post<Supplier>(
       this.baseApiUrl + '/api/supplier',
       formData
     );
   }
 
-  getSupplier(id: string): Observable<Supplier> {
-    return this.http.get<Supplier>(this.baseApiUrl + '/api/supplier/' + id);
+  getSupplier(id: string): Observable<Supplier> { 
+    return this.http.get<Supplier>(this.baseApiUrl + '/api/supplier/' + id); 
   }
 
   updateSupplier(id: string, formData: FormData): Observable<Supplier> {
@@ -36,8 +36,4 @@ export class SupplierService {
   deleteSupplier(id: string): Observable<Supplier> {
     return this.http.delete<Supplier>(this.baseApiUrl + '/api/supplier/' + id);
   }
-
-
-
- 
 }

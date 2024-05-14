@@ -15,9 +15,15 @@ namespace SupplierManagement.Data.Models
 
         public Guid ProductId { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         [ForeignKey("ProductId")]
         public virtual Product? Product { get; set; }
 
+        public Guid PurchaseOrderId { get; set; }
+
+        [ForeignKey("PurchaseOrderId")]
+        public virtual PurchaseOrder? PurchaseOrder { get; set; }
 
     }
 }

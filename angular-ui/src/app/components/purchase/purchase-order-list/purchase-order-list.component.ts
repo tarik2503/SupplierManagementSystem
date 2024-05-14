@@ -45,7 +45,15 @@ export class PurchaseOrderListComponent {
   }
 
   deleteFn(id: string) {
-    
+    this.purchaseOrderService.deletePurchaseOrder(id).subscribe({
+      next: (response) => {
+        alert(response.poNumber + 'is deleted successfully!');
+        this.ngOnInit();
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
   }
 
  

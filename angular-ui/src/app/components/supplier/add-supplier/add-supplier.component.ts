@@ -28,6 +28,11 @@ export class AddSupplierComponent implements OnInit {
 
   ngOnInit(): void {
     this.formInitialize();
+    this.modeChecking();
+  }
+
+  
+  modeChecking(){
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.mode = 'edit';
@@ -61,7 +66,7 @@ export class AddSupplierComponent implements OnInit {
   loadSupplier(id: string) {
     this.supplierService.getSupplier(id).subscribe((response) => {
       this.addSupplierForm.patchValue(response);
-      this.imageURL = this.imagePathService.getImageFullPath(response.imgPath);
+      this.imageURL = `'${this.imagePathService.getImageFullPath(response.imgPath)}'`;
     });
 
   }
@@ -71,19 +76,16 @@ export class AddSupplierComponent implements OnInit {
    var supplier:Supplier = this.addSupplierForm.value as Supplier;
    var formData = new FormData();
    formData.append('image', this.image);
-   console.log(this.image);
    formData.append('supplier',JSON.stringify(supplier))
    if (this.mode === 'add') {
     this.supplierService.addSupplier(formData).subscribe({
       next: (response) => {
-        console.log(response);
         this.router.navigate(['supplierlist']);
       },
     });
   } else if (this.mode === 'edit') {
     this.supplierService.updateSupplier(this.supplierId, formData).subscribe({
       next: (response) => {
-        console.log(response);
         this.router.navigate(['supplierlist']);
       },
     });

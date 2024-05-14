@@ -15,6 +15,7 @@ namespace SupplierManagement.Data.Models
 
         public DateTime DeliveryDate { get; set;}
 
+        public bool IsDeleted { get; set; } = false;
         public Guid SupplierId { get; set; }
         [ForeignKey("SupplierId")]
         public virtual Supplier? Supplier { get; set; }

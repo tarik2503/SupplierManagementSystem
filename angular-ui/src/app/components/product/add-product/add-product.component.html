@@ -1,4 +1,4 @@
-<div class="container my-2">
+<div class="container my-3">
   <h1 class="mb-3">{{formHeading}}</h1>
 
   <div class="row justify-content-center">
@@ -33,25 +33,32 @@
           </div>
         </div>
 
-        <div class="row mb-3 shadow bg-light ">
-          <div class="col-md-4 mt-2 ">
+        <div class="row mb-3 justify-content-evenly ">
+          <div class="col-md-3  shadow bg-light border">
             <!-- add image -->
 
-            <div class="mt-2">
-              <img alt="" [src]="imageURL" class="product-img-preview" />
+            <div class=" text-center mt-3">
+              <img alt="" [ngStyle]="{
+                'background-image':
+                  'url(' +
+                  (imageURL ? imageURL : 'assets/images/productDummy.jpg') +
+                  ')'
+              }" class="product-img-preview" />
             </div>
             <div class="input-group">
               <input
                 type="file"
                 #file
                 id="file"
+                accept="image/*"
                 class="form-control"
                 style="display: none"
                 (change)="uploadFile($event)"
+                
               />
               <button
                 type="button"
-                class="btn btn-success"
+                class="btn btn-success mb-2"
                 (click)="file.click()"
               >
                 Choose Image
@@ -61,7 +68,7 @@
             <!-- add image -->
           </div>
 
-          <div class="col-md-8">
+          <div class="col-md-8 shadow bg-light border p-3">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="title" class="form-label">Title</label>

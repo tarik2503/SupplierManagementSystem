@@ -66,6 +66,11 @@ namespace SupplierManagement.API.Repository
             {
                 result.IsDeleted = true;
 
+                //Do IsDeleted true for the products related to this supplier
+                await _context.Products
+                  .Where(p => p.SupplierId == result.Id)
+                  .ForEachAsync(p => p.IsDeleted = true);
+
                 await _context.SaveChangesAsync();
                 return result;
             }

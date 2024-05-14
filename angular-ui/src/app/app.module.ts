@@ -46,7 +46,6 @@ import { PurchaseOrderListComponent } from './components/purchase/purchase-order
     }),
   ],
   providers: [
-    provideClientHydration(),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
